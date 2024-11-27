@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fuksiarz/screens/home_screen.dart';
+import 'package:fuksiarz/screens/search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,34 +12,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fuksiarz',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Fuksiarz'),
+    return ScreenUtilInit(
+      designSize: const Size(375, 830),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return const MaterialApp(
+          title: 'Fuksiarz',
+          home: FuksiarzApp(),
+        );
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  final String title;
-
-  const MyHomePage({super.key, required this.title});
+class FuksiarzApp extends StatefulWidget {
+  const FuksiarzApp({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<FuksiarzApp> createState() => _FuksiarzAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _FuksiarzAppState extends State<FuksiarzApp> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = const [HomeScreen(), SearchScreen()];
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-    );
+    return Scaffold(body: _screens[_currentIndex]);
   }
 }
