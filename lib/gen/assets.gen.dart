@@ -5,10 +5,12 @@ class $AssetsImgGen {
 
   AssetGenImage get logo => const AssetGenImage('assets/logo.webp');
   AssetGenImage get plusIcon => const AssetGenImage('assets/plus_icon.webp');
+  AssetGenImage get loopIcon => const AssetGenImage('assets/loop_loop.webp');
 
   List<AssetGenImage> get values => [
         logo,
         plusIcon,
+        loopIcon,
       ];
 }
 

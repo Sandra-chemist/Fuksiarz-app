@@ -12,30 +12,32 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: ColorStyle.backgroundColor,
-      child: Stack(
-        children: [
-          Container(
-            height: 100.h,
-            color: ColorStyle.redColor,
-          ),
-          Positioned(
-            top: 60.h,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: ColorStyle.backgroundColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(35),
-                  topRight: Radius.circular(35),
-                ),
-              ),
-              child: child,
+    return Material(
+      child: Container(
+        color: ColorStyle.backgroundColor,
+        child: Stack(
+          children: [
+            Container(
+              height: 100.h,
+              color: ColorStyle.redColor,
             ),
-          ),
-        ],
+            Positioned(
+              top: 60.h,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: ColorStyle.backgroundColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(35),
+                    topRight: Radius.circular(35),
+                  ),
+                ),
+                child: child,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
