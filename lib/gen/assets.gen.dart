@@ -6,11 +6,23 @@ class $AssetsImgGen {
   AssetGenImage get logo => const AssetGenImage('assets/logo.webp');
   AssetGenImage get plusIcon => const AssetGenImage('assets/plus_icon.webp');
   AssetGenImage get loopIcon => const AssetGenImage('assets/loop_loop.webp');
+  AssetGenImage get warningIcon => const AssetGenImage('assets/warning_icon.webp');
+  AssetGenImage get add1 => const AssetGenImage('assets/add_1.webp');
+  AssetGenImage get add2 => const AssetGenImage('assets/add_2.webp');
+  AssetGenImage get add3 => const AssetGenImage('assets/add_3.webp');
+  AssetGenImage get add4 => const AssetGenImage('assets/add_4.webp');
+  AssetGenImage get add5 => const AssetGenImage('assets/add_5.webp');
 
   List<AssetGenImage> get values => [
         logo,
         plusIcon,
         loopIcon,
+        warningIcon,
+        add1,
+        add2,
+        add3,
+        add4,
+        add5,
       ];
 }
 

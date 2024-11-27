@@ -24,6 +24,7 @@ class SearchComponent extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: horizontalM2, vertical: verticalM2),
         padding: EdgeInsets.symmetric(horizontal: horizontalM3, vertical: verticalM2),
         decoration: BoxDecoration(
+          color: ColorStyle.whiteColor,
           borderRadius: BorderRadius.circular(5.r),
           border: Border.all(color: ColorStyle.searchIconColor, width: 1.0),
         ),

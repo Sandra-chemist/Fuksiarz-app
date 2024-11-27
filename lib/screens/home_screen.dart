@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuksiarz/components/layout.dart';
-import 'package:fuksiarz/components/search_component.dart';
+import 'package:fuksiarz/components/search_screen/search_component.dart';
 import 'package:fuksiarz/components/upper_beam.dart';
 import 'package:fuksiarz/const/texts.dart';
 import 'package:fuksiarz/gen/assets.gen.dart';
