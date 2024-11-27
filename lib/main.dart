@@ -45,6 +45,6 @@ class _FuksiarzAppState extends State<FuksiarzApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _screens[_currentIndex]);
+    return _screens[_currentIndex];
   }
 }
