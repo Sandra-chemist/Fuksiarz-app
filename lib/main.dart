@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fuksiarz/models/sports_bookmaker_model.dart';
 import 'package:fuksiarz/screens/home_screen.dart';
 import 'package:fuksiarz/screens/search_screen.dart';
+import 'package:fuksiarz/services/service_locator.dart';
+import 'package:provider/provider.dart';
 
 void main() {
+  setupServiceLocator();
   runApp(const MyApp());
 }
 
@@ -17,9 +21,12 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return const MaterialApp(
-          title: 'Fuksiarz',
-          home: FuksiarzApp(),
+        return ChangeNotifierProvider(
+          create: (_) => SportsBookmakerModel(),
+          child: const MaterialApp(
+            title: 'Fuksiarz',
+            home: FuksiarzApp(),
+          ),
         );
       },
     );
