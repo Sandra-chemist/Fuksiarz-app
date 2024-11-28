@@ -37,4 +37,11 @@ class TextStyles {
     fontSize: 10.sp,
     color: ColorStyle.textColor,
   );
+
+  static TextStyle body_6 = TextStyle(
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w500,
+    fontSize: 8.sp,
+    color: ColorStyle.textColor,
+  );
 }

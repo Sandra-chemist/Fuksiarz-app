@@ -116,19 +116,19 @@ class EventGames {
 class Outcome {
   final int outcomeId;
   final String outcomeName;
-  final int outcomePosition;
+  final double outcomeOdds;
 
   const Outcome({
     required this.outcomeId,
     required this.outcomeName,
-    required this.outcomePosition,
+    required this.outcomeOdds,
   });
 
   factory Outcome.fromDTO(OutcomeDTO dto) {
     return Outcome(
       outcomeId: dto.outcomeId,
       outcomeName: dto.outcomeName,
-      outcomePosition: dto.outcomePosition,
+      outcomeOdds: dto.outcomeOdds,
     );
   }
 }

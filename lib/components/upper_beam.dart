@@ -24,7 +24,7 @@ class UpperBeam extends StatelessWidget {
         color: Colors.transparent,
         border: Border(
           bottom: BorderSide(
-            color: ColorStyle.borderColor,
+            color: ColorStyle.secondaryGrey,
             width: 1.0,
           ),
         ),
@@ -50,7 +50,7 @@ class UpperBeam extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border.all(
-              color: ColorStyle.borderColor,
+              color: ColorStyle.secondaryGrey,
               width: 1,
             ),
             borderRadius: BorderRadius.all(Radius.circular(50.r)),

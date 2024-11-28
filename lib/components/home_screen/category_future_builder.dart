@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fuksiarz/components/home_screen/category_selector_future_build.dart';
-import 'package:fuksiarz/components/home_screen/game_list_future_build.dart';
+import 'package:fuksiarz/components/home_screen/event_card/game_list_future_build.dart';
 import 'package:fuksiarz/components/search_screen/loading_component.dart';
 import 'package:fuksiarz/const/texts.dart';
 import 'package:fuksiarz/gen/assets.gen.dart';

@@ -60,19 +60,19 @@ class EventGamesDTO {
 class OutcomeDTO {
   final int outcomeId;
   final String outcomeName;
-  final int outcomePosition;
+  final double outcomeOdds;
 
   const OutcomeDTO({
     required this.outcomeId,
     required this.outcomeName,
-    required this.outcomePosition,
+    required this.outcomeOdds,
   });
 
   factory OutcomeDTO.fromJson(Map<String, dynamic> json) {
     return OutcomeDTO(
       outcomeId: json['outcomeId'],
       outcomeName: json['outcomeName'],
-      outcomePosition: json['outcomePosition'],
+      outcomeOdds: json['outcomeOdds'],
     );
   }
 }

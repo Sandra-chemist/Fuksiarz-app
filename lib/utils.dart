@@ -13,6 +13,7 @@ class Utils {
       'Å‚': 'ł',
       'Å¡': 'ś',
       'Å½': 'Ż',
+      'Ä': 'Ę'
     };
 
     polishChars.forEach((key, value) {
