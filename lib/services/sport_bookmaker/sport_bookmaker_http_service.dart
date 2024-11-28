@@ -1,8 +1,7 @@
 import 'dart:convert';
+import 'package:fuksiarz/const/texts.dart';
 import 'package:fuksiarz/services/sport_bookmaker/sports_bookmaker_service.dart';
 import 'package:http/http.dart' as http;
-
-const String getSportBookmakerURL = 'https://fuksiarz.pl/rest//market/categories/multi/1,2,3/events';
 
 class SportBookmakerService extends ISportBookmakerService {
   @override
@@ -13,8 +12,7 @@ class SportBookmakerService extends ISportBookmakerService {
 
       return data.map((json) => SportBookmakerDTO.fromJson(json as Map<String, dynamic>)).toList();
     } catch (e) {
-      print('$e');
-      rethrow;
+      throw Exception('Error: $e');
     }
   }
 }

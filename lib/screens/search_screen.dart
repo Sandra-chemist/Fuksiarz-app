@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fuksiarz/components/search_screen/ad_gallery.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:fuksiarz/components/layout.dart';
-import 'package:fuksiarz/components/search_screen/loading_component.dart';
-import 'package:fuksiarz/const/colors.dart';
 import 'package:fuksiarz/const/margin.dart';
-import 'package:fuksiarz/const/text_styles.dart';
-import 'package:fuksiarz/const/texts.dart';
 import 'package:fuksiarz/gen/assets.gen.dart';
+import 'package:fuksiarz/services/search/search_http_service.dart';
+import 'package:fuksiarz/components/search_screen/ad_gallery.dart';
+import 'package:fuksiarz/components/search_screen/loading_component.dart';
+import 'package:fuksiarz/components/search_screen/search_result_item.dart';
+import 'package:fuksiarz/components/search_screen/search_text_field.dart';
+import 'package:fuksiarz/const/texts.dart';
 
 enum SearchState { idle, typing, found, notFound }
 
@@ -21,7 +22,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchState extends State<SearchScreen> with SingleTickerProviderStateMixin {
   String query = '';
-  bool isSearching = false;
+  List<String> searchResults = [];
   late AnimationController _animationController;
   SearchState currentState = SearchState.idle;
 
@@ -34,34 +35,58 @@ class _SearchState extends State<SearchScreen> with SingleTickerProviderStateMix
     )..repeat();
   }
 
-  void _onSearchChanged(String value) {
-    setState(() {
-      query = value;
-
-      if (query.isEmpty) {
-        currentState = SearchState.idle;
-      } else if (query.length < 3) {
-        currentState = SearchState.typing;
-      } else {
-        final results = _getSearchResults();
-        currentState = results.isNotEmpty ? SearchState.found : SearchState.notFound;
-      }
-    });
-  }
-
   @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
 
-  List<String> _getSearchResults() {
-    List<String> items = ['Jeden', 'Dwa', 'Trzy'];
+  void _onSearchChanged(String value) {
+    setState(() {
+      query = value;
 
-    if (query.isEmpty || query.length < 3) {
-      return [];
-    }
-    return items.where((item) => item.toLowerCase().contains(query.toLowerCase())).toList();
+      switch (query.length) {
+        case 0:
+          currentState = SearchState.idle;
+          searchResults = [];
+          break;
+        case 1:
+        case 2:
+        case 3:
+          currentState = SearchState.typing;
+          break;
+        default:
+          currentState = SearchState.typing;
+          SearchService().fetchSearchResults(query).then((results) {
+            setState(() {
+              searchResults = results;
+              currentState = searchResults.isNotEmpty ? SearchState.found : SearchState.notFound;
+            });
+          }).catchError((error) {
+            setState(() {
+              currentState = SearchState.notFound;
+            });
+          });
+          break;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Layout(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: horizontalM4, vertical: verticalM5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SearchTextField(onChanged: _onSearchChanged),
+            SizedBox(height: verticalM2),
+            _buildContent(),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildContent() {
@@ -84,7 +109,7 @@ class _SearchState extends State<SearchScreen> with SingleTickerProviderStateMix
           secondText: secondLoadingText,
         );
       case SearchState.found:
-        return Text('find');
+        return _buildResults;
       case SearchState.notFound:
         return LoadingComponent(
           iconPath: Assets.icon.warningIcon.path,
@@ -95,56 +120,12 @@ class _SearchState extends State<SearchScreen> with SingleTickerProviderStateMix
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Layout(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: horizontalM4, vertical: verticalM5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _textField(context),
-            _buildContent(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _textField(BuildContext context) {
-    return TextField(
-      onChanged: _onSearchChanged,
-      decoration: InputDecoration(
-        hintText: searchText.toUpperCase(),
-        hintStyle: TextStyles.body_5.copyWith(color: ColorStyle.primaryGrey),
-        prefixIcon: IconButton(
-          icon: const Icon(
-            CupertinoIcons.back,
-            color: ColorStyle.primaryGrey,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.r),
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: ColorStyle.primaryGrey,
-            width: 1.0,
-          ),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: ColorStyle.textColor,
-            width: 1.0,
-          ),
-        ),
-        isDense: true,
-        filled: true,
-        fillColor: ColorStyle.whiteColor,
-      ),
-    );
-  }
+  Widget get _buildResults => Column(
+        children: searchResults.map((result) {
+          return SearchResultItem(result: result)
+              .animate()
+              .fadeIn(duration: 700.ms)
+              .moveY(begin: -20, end: 0, duration: 300.ms);
+        }).toList(),
+      );
 }
