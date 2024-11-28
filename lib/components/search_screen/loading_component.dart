@@ -8,16 +8,16 @@ import 'package:fuksiarz/const/text_styles.dart';
 class LoadingComponent extends StatelessWidget {
   final AnimationController? animationController;
   final String iconPath;
-  final String firstText;
-  final String secondText;
+  final String? firstText;
+  final String? secondText;
   final bool enableAnimation;
 
   const LoadingComponent({
     super.key,
     this.animationController,
     required this.iconPath,
-    required this.firstText,
-    required this.secondText,
+    this.firstText,
+    this.secondText,
     this.enableAnimation = true,
   });
 
@@ -27,22 +27,28 @@ class LoadingComponent extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(top: 100.h),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildIcon(),
-            SizedBox(height: verticalM4),
-            _buildText(
-                firstText,
-                TextStyles.body_2.copyWith(
-                  fontWeight: FontWeight.w700,
-                )),
-            SizedBox(height: verticalM1),
-            _buildText(
-              secondText,
-              TextStyles.body_5.copyWith(
-                color: ColorStyle.primaryGrey,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            if (firstText != null) ...[
+              SizedBox(height: verticalM4),
+              if (firstText != null)
+                _buildText(
+                  firstText!,
+                  TextStyles.body_2.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              if (secondText != null) SizedBox(height: verticalM1),
+              if (secondText != null)
+                _buildText(
+                  secondText!,
+                  TextStyles.body_5.copyWith(
+                    color: ColorStyle.primaryGrey,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+            ],
           ],
         ),
       ),

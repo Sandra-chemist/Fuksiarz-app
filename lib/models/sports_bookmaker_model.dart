@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fuksiarz/const/texts.dart';
 import 'package:fuksiarz/services/service_locator.dart';
 import 'package:fuksiarz/services/sport_bookmaker/sports_bookmaker_service.dart';
 import 'package:fuksiarz/utils.dart';
@@ -31,11 +32,32 @@ class SportsBookmakerModel extends ChangeNotifier {
       baseballCategory = _matches
           .where((match) => Utils.fixPolishCharacters(match.category1Name) == Utils.fixPolishCharacters('Baseball'))
           .toList();
-
       notifyListeners();
     } catch (e) {
       debugPrint("Error fetching matches: $e");
     }
+  }
+
+  List<EventGames> getEventGamesForCategory(SportsBookmakerModel sportsBookmakerModel, String categoryName) {
+    final fixedCategoryName = Utils.fixPolishCharacters(categoryName);
+
+    List<EventGames> eventGames = [];
+
+    switch (fixedCategoryName) {
+      case basketballLabel:
+        eventGames = sportsBookmakerModel.basketballCategory.expand((match) => match.eventGames).toList();
+        break;
+      case soccerLabel:
+        eventGames = sportsBookmakerModel.soccerCategory.expand((match) => match.eventGames).toList();
+        break;
+      case baseballLabel:
+        eventGames = sportsBookmakerModel.baseballCategory.expand((match) => match.eventGames).toList();
+        break;
+      default:
+        eventGames = sportsBookmakerModel.matches.expand((match) => match.eventGames).toList();
+        break;
+    }
+    return eventGames;
   }
 
   Iterable<SportBookmaker> get matches {

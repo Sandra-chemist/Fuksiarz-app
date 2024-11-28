@@ -6,3 +6,7 @@ const String firstErrorText = "Brak wyników";
 const String secondErrorText = "Spróbuj innego zapytania";
 const String recommendedText = "Polecane:";
 const String allShowText = 'Pokaż wszystkie';
+const String basketballLabel = "Koszykówka";
+const String soccerLabel = "Piłka nożna";
+const String baseballLabel = "Baseball";
+const String allMatchesLabel = "Wszystkie";
