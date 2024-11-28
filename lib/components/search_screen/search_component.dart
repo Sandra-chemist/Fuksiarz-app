@@ -26,19 +26,19 @@ class SearchComponent extends StatelessWidget {
         decoration: BoxDecoration(
           color: ColorStyle.whiteColor,
           borderRadius: BorderRadius.circular(5.r),
-          border: Border.all(color: ColorStyle.searchIconColor, width: 1.0),
+          border: Border.all(color: ColorStyle.primaryGrey, width: 1.0),
         ),
         child: Row(
           children: [
             Icon(
               Icons.search,
-              color: ColorStyle.searchIconColor,
+              color: ColorStyle.primaryGrey,
               size: 18.sp,
             ),
             SizedBox(width: horizontalM2),
             Text(
               searchText.toUpperCase(),
-              style: TextStyles.body_5.copyWith(color: ColorStyle.searchIconColor),
+              style: TextStyles.body_5.copyWith(color: ColorStyle.primaryGrey),
             ),
           ],
         ),

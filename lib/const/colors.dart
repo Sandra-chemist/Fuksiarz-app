@@ -5,6 +5,8 @@ class ColorStyle {
   static const Color backgroundColor = Color.fromRGBO(248, 248, 248, 1);
   static const Color textColor = Color.fromRGBO(0, 0, 0, 1);
   static const Color borderColor = Color.fromRGBO(227, 232, 238, 1);
-  static const Color searchIconColor = Color.fromRGBO(148, 148, 148, 1);
   static const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
+  static const Color primaryGrey = Color.fromRGBO(148, 148, 148, 1);
+  static const Color secondaryGrey = Color.fromRGBO(227, 232, 238, 1);
+  static const Color tertiaryGrey = Color.fromRGBO(224, 230, 237, 1);
 }

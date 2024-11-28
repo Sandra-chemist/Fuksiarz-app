@@ -116,11 +116,11 @@ class _SearchState extends State<SearchScreen> with SingleTickerProviderStateMix
       onChanged: _onSearchChanged,
       decoration: InputDecoration(
         hintText: searchText.toUpperCase(),
-        hintStyle: TextStyles.body_5.copyWith(color: ColorStyle.searchIconColor),
+        hintStyle: TextStyles.body_5.copyWith(color: ColorStyle.primaryGrey),
         prefixIcon: IconButton(
           icon: const Icon(
             CupertinoIcons.back,
-            color: ColorStyle.searchIconColor,
+            color: ColorStyle.primaryGrey,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -131,7 +131,7 @@ class _SearchState extends State<SearchScreen> with SingleTickerProviderStateMix
         ),
         enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: ColorStyle.searchIconColor,
+            color: ColorStyle.primaryGrey,
             width: 1.0,
           ),
         ),

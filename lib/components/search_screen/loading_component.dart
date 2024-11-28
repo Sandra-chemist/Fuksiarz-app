@@ -39,7 +39,7 @@ class LoadingComponent extends StatelessWidget {
             _buildText(
               secondText,
               TextStyles.body_5.copyWith(
-                color: ColorStyle.searchIconColor,
+                color: ColorStyle.primaryGrey,
                 fontWeight: FontWeight.w600,
               ),
             ),
