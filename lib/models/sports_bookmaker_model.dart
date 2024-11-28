@@ -6,7 +6,7 @@ import 'package:fuksiarz/utils.dart';
 
 class SportsBookmakerModel extends ChangeNotifier {
   late ISportBookmakerService _sportsBookmakerService;
-  List<SportBookmaker> _matches = [];
+  List<SportBookmaker> _items = [];
 
   List<SportBookmaker> basketballCategory = [];
   List<SportBookmaker> soccerCategory = [];
@@ -15,53 +15,53 @@ class SportsBookmakerModel extends ChangeNotifier {
   SportsBookmakerModel() {
     _sportsBookmakerService = getIt<ISportBookmakerService>();
   }
-  Future<void> fetchMatches() async {
+
+  Future<void> fetchGames() async {
     try {
       final List<SportBookmakerDTO> matchesDTO = await _sportsBookmakerService.getMatches();
 
-      _matches = matchesDTO.map((matchesDTO) {
+      _items = matchesDTO.map((matchesDTO) {
         return SportBookmaker.fromDTO(matchesDTO);
       }).toList();
 
-      basketballCategory = _matches
+      basketballCategory = _items
           .where((match) => Utils.fixPolishCharacters(match.category1Name) == Utils.fixPolishCharacters('Koszykówka'))
           .toList();
-      soccerCategory = _matches
+      soccerCategory = _items
           .where((match) => Utils.fixPolishCharacters(match.category1Name) == Utils.fixPolishCharacters('Piłka nożna'))
           .toList();
-      baseballCategory = _matches
+      baseballCategory = _items
           .where((match) => Utils.fixPolishCharacters(match.category1Name) == Utils.fixPolishCharacters('Baseball'))
           .toList();
       notifyListeners();
     } catch (e) {
-      debugPrint("Error fetching matches: $e");
+      throw Exception('Error: $e');
     }
   }
 
   List<EventGames> getEventGamesForCategory(SportsBookmakerModel sportsBookmakerModel, String categoryName) {
     final fixedCategoryName = Utils.fixPolishCharacters(categoryName);
-
     List<EventGames> eventGames = [];
 
     switch (fixedCategoryName) {
       case basketballLabel:
-        eventGames = sportsBookmakerModel.basketballCategory.expand((match) => match.eventGames).toList();
+        eventGames = sportsBookmakerModel.basketballCategory.expand((item) => item.eventGames).toList();
         break;
       case soccerLabel:
-        eventGames = sportsBookmakerModel.soccerCategory.expand((match) => match.eventGames).toList();
+        eventGames = sportsBookmakerModel.soccerCategory.expand((item) => item.eventGames).toList();
         break;
       case baseballLabel:
-        eventGames = sportsBookmakerModel.baseballCategory.expand((match) => match.eventGames).toList();
+        eventGames = sportsBookmakerModel.baseballCategory.expand((item) => item.eventGames).toList();
         break;
       default:
-        eventGames = sportsBookmakerModel.matches.expand((match) => match.eventGames).toList();
+        eventGames = sportsBookmakerModel.games.expand((item) => item.eventGames).toList();
         break;
     }
     return eventGames;
   }
 
-  Iterable<SportBookmaker> get matches {
-    return _matches;
+  Iterable<SportBookmaker> get games {
+    return _items;
   }
 }
 

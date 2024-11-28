@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fuksiarz/components/home_screen/category_selector_future_build.dart';
 import 'package:fuksiarz/components/home_screen/event_card/game_list_future_build.dart';
-import 'package:fuksiarz/components/search_screen/loading_component.dart';
+import 'package:fuksiarz/components/loading_component.dart';
 import 'package:fuksiarz/const/texts.dart';
 import 'package:fuksiarz/gen/assets.gen.dart';
 import 'package:fuksiarz/models/sports_bookmaker_model.dart';
@@ -32,11 +32,11 @@ class _CategoryFutureBuilderState extends State<CategoryFutureBuilder> with Sing
   Future<void> _initializeData() async {
     final sportsBookmakerModel = Provider.of<SportsBookmakerModel>(context, listen: false);
 
-    await sportsBookmakerModel.fetchMatches();
+    await sportsBookmakerModel.fetchGames();
 
     setState(() {
       categoryCounts = {
-        allMatchesLabel: sportsBookmakerModel.matches.length,
+        allMatchesLabel: sportsBookmakerModel.games.length,
         basketballLabel: sportsBookmakerModel.basketballCategory.length,
         soccerLabel: sportsBookmakerModel.soccerCategory.length,
         baseballLabel: sportsBookmakerModel.baseballCategory.length,

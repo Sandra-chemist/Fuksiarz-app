@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fuksiarz/components/home_screen/event_card/event_name_card.dart';
-import 'package:fuksiarz/components/search_screen/loading_component.dart';
+import 'package:fuksiarz/components/loading_component.dart';
 import 'package:fuksiarz/const/margin.dart';
 import 'package:fuksiarz/gen/assets.gen.dart';
 import 'package:fuksiarz/models/sports_bookmaker_model.dart';
@@ -41,7 +41,7 @@ class _GameListFutureBuilderState extends State<GameListFutureBuilder> with Sing
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: widget.sportsBookmakerModel.fetchMatches(),
+      future: widget.sportsBookmakerModel.fetchGames(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           final eventGames = widget.sportsBookmakerModel

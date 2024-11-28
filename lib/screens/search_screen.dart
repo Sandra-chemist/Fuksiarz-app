@@ -6,7 +6,7 @@ import 'package:fuksiarz/const/margin.dart';
 import 'package:fuksiarz/gen/assets.gen.dart';
 import 'package:fuksiarz/services/search/search_http_service.dart';
 import 'package:fuksiarz/components/search_screen/ad_gallery.dart';
-import 'package:fuksiarz/components/search_screen/loading_component.dart';
+import 'package:fuksiarz/components/loading_component.dart';
 import 'package:fuksiarz/components/search_screen/search_result_item.dart';
 import 'package:fuksiarz/components/search_screen/search_text_field.dart';
 import 'package:fuksiarz/const/texts.dart';

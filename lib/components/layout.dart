@@ -26,11 +26,11 @@ class Layout extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: ColorStyle.backgroundColor,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(35),
-                    topRight: Radius.circular(35),
+                    topLeft: Radius.circular(35.r),
+                    topRight: Radius.circular(35.r),
                   ),
                 ),
                 child: child,

@@ -20,7 +20,7 @@ class EventGameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SportBookmaker game = sportsBookmakerModel.matches.firstWhere(
+    final SportBookmaker game = sportsBookmakerModel.games.firstWhere(
       (match) => match.eventGames.contains(eventGame),
     );
     final eventNameParts = Utils.fixPolishCharacters(game.eventName.toUpperCase()).split(' - ');

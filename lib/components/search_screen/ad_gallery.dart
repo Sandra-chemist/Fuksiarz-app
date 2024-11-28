@@ -7,6 +7,7 @@ import 'package:fuksiarz/const/texts.dart';
 
 class AdGallery extends StatelessWidget {
   final List<String> imagePaths;
+
   const AdGallery({super.key, required this.imagePaths});
 
   @override
@@ -19,7 +20,7 @@ class AdGallery extends StatelessWidget {
     );
   }
 
-  Padding get _textSection => Padding(
+  Widget get _textSection => Padding(
         padding: EdgeInsets.only(top: verticalM3),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -7,10 +7,7 @@ import 'package:fuksiarz/const/text_styles.dart';
 class SearchResultItem extends StatelessWidget {
   final String result;
 
-  const SearchResultItem({
-    super.key,
-    required this.result,
-  });
+  const SearchResultItem({super.key, required this.result});
 
   @override
   Widget build(BuildContext context) {
