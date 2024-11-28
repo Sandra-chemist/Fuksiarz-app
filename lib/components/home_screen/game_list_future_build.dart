@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fuksiarz/const/texts.dart';
 import 'package:fuksiarz/models/sports_bookmaker_model.dart';
 import 'package:fuksiarz/utils.dart';
 
@@ -19,7 +18,7 @@ class GameListFutureBuilder extends StatelessWidget {
       future: sportsBookmakerModel.fetchMatches(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          final eventGames = _getEventGamesForCategory(sportsBookmakerModel, selectedCategory);
+          final eventGames = sportsBookmakerModel.getEventGamesForCategory(sportsBookmakerModel, selectedCategory);
 
           return ConstrainedBox(
             constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.6),
@@ -43,27 +42,5 @@ class GameListFutureBuilder extends StatelessWidget {
         return Container();
       },
     );
-  }
-
-  List<EventGames> _getEventGamesForCategory(SportsBookmakerModel sportsBookmakerModel, String categoryName) {
-    final fixedCategoryName = Utils.fixPolishCharacters(categoryName);
-
-    List<EventGames> eventGames = [];
-
-    switch (fixedCategoryName) {
-      case basketballLabel:
-        eventGames = sportsBookmakerModel.basketballCategory.expand((match) => match.eventGames).toList();
-        break;
-      case soccerLabel:
-        eventGames = sportsBookmakerModel.soccerCategory.expand((match) => match.eventGames).toList();
-        break;
-      case baseballLabel:
-        eventGames = sportsBookmakerModel.baseballCategory.expand((match) => match.eventGames).toList();
-        break;
-      default:
-        eventGames = sportsBookmakerModel.matches.expand((match) => match.eventGames).toList();
-        break;
-    }
-    return eventGames;
   }
 }
