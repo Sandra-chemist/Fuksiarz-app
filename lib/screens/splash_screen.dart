@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fuksiarz/const/colors.dart';
-import 'package:fuksiarz/gen/assets.gen.dart';
 import 'package:fuksiarz/routes/app_router.gr.dart';
+import 'package:rive/rive.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
@@ -13,6 +13,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String logoAnimationUrl = "assets/logo_animation.riv";
+
   @override
   void initState() {
     super.initState();
@@ -20,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
     if (mounted) {
       context.router.replace(const HomeRoute());
     }
@@ -31,7 +33,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: ColorStyle.backgroundColor,
       body: Center(
-        child: Image.asset(Assets.icon.logo.path),
+        child: RiveAnimation.asset(
+          logoAnimationUrl,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:fuksiarz/models/sports_bookmaker_model.dart';
 import 'package:fuksiarz/routes/app_router.dart';
 import 'package:fuksiarz/services/service_locator.dart';
 import 'package:provider/provider.dart';
+import 'package:rive/rive.dart';
 
 void main() {
   setupServiceLocator();
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appRouter = AppRouter();
+    RiveFile.initialize();
 
     return ScreenUtilInit(
       designSize: const Size(375, 830),
