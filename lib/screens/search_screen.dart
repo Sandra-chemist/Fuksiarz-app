@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -13,6 +14,7 @@ import 'package:fuksiarz/const/texts.dart';
 
 enum SearchState { idle, typing, found, notFound }
 
+@RoutePage()
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
@@ -52,7 +54,6 @@ class _SearchState extends State<SearchScreen> with SingleTickerProviderStateMix
           break;
         case 1:
         case 2:
-        case 3:
           currentState = SearchState.typing;
           break;
         default:

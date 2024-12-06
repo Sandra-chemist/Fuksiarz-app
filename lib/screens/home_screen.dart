@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:fuksiarz/components/layout.dart';
 import 'package:fuksiarz/components/search_screen/search_component.dart';
@@ -6,6 +7,7 @@ import 'package:fuksiarz/gen/assets.gen.dart';
 import 'package:fuksiarz/const/texts.dart';
 import 'package:fuksiarz/components/home_screen/category_future_builder.dart';
 
+@RoutePage()
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

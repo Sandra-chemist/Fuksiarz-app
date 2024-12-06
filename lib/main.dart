@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fuksiarz/models/sports_bookmaker_model.dart';
-import 'package:fuksiarz/screens/home_screen.dart';
-import 'package:fuksiarz/screens/search_screen.dart';
+import 'package:fuksiarz/routes/app_router.dart';
 import 'package:fuksiarz/services/service_locator.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +15,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appRouter = AppRouter();
+
     return ScreenUtilInit(
       designSize: const Size(375, 830),
       minTextAdapt: true,
@@ -23,35 +24,12 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return ChangeNotifierProvider(
           create: (_) => SportsBookmakerModel(),
-          child: const MaterialApp(
+          child: MaterialApp.router(
+            routerConfig: appRouter.config(),
             title: 'Fuksiarz',
-            home: FuksiarzApp(),
           ),
         );
       },
     );
-  }
-}
-
-class FuksiarzApp extends StatefulWidget {
-  const FuksiarzApp({super.key});
-
-  @override
-  State<FuksiarzApp> createState() => _FuksiarzAppState();
-}
-
-class _FuksiarzAppState extends State<FuksiarzApp> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = const [HomeScreen(), SearchScreen()];
-  @override
-  void initState() {
-    super.initState();
-    _currentIndex = 0;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _screens[_currentIndex];
   }
 }

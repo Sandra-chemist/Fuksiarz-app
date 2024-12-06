@@ -45,6 +45,12 @@ class _CategoryFutureBuilderState extends State<CategoryFutureBuilder> with Sing
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final sportsBookmakerModel = Provider.of<SportsBookmakerModel>(context, listen: false);
 

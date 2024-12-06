@@ -1,10 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fuksiarz/const/colors.dart';
 import 'package:fuksiarz/const/margin.dart';
 import 'package:fuksiarz/const/text_styles.dart';
 import 'package:fuksiarz/const/texts.dart';
-import 'package:fuksiarz/screens/search_screen.dart';
+import 'package:fuksiarz/routes/app_router.gr.dart';
 
 class SearchComponent extends StatelessWidget {
   const SearchComponent({super.key});
@@ -13,12 +14,7 @@ class SearchComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const SearchScreen(),
-          ),
-        );
+        context.router.replace(const SearchRoute());
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: horizontalM2, vertical: verticalM2),
