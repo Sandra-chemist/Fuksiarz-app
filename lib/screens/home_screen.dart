@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:fuksiarz/components/home_screen/category_future_builder_bloc.dart';
 import 'package:fuksiarz/components/layout.dart';
 import 'package:fuksiarz/components/search_screen/search_component.dart';
 import 'package:fuksiarz/components/upper_beam.dart';
@@ -22,7 +23,8 @@ class HomeScreen extends StatelessWidget {
             text: price,
           ),
           const SearchComponent(),
-          const CategoryFutureBuilder(),
+          // const CategoryFutureBuilder(),
+          const CategoryFutureBuilderBloc(),
         ],
       ),
     );

@@ -40,6 +40,8 @@ dependencies:
   flutter_animate: ^4.5.2
   auto_route: ^9.2.2
   rive: ^0.13.20
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_test:
