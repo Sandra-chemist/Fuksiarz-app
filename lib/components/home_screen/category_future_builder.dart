@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fuksiarz/components/home_screen/category_selector_future_build.dart';
-import 'package:fuksiarz/components/home_screen/event_card/game_list_future_build.dart';
+import 'package:fuksiarz/display_data/sports_data_bloc.dart';
 import 'package:fuksiarz/components/loading_component.dart';
 import 'package:fuksiarz/const/texts.dart';
+import 'package:fuksiarz/display_data/sports_data_event.dart';
+import 'package:fuksiarz/display_data/sports_data_state.dart';
 import 'package:fuksiarz/gen/assets.gen.dart';
-import 'package:fuksiarz/models/sports_bookmaker_model.dart';
-import 'package:provider/provider.dart';
 
 class CategoryFutureBuilder extends StatefulWidget {
   const CategoryFutureBuilder({super.key});
@@ -16,32 +17,16 @@ class CategoryFutureBuilder extends StatefulWidget {
 
 class _CategoryFutureBuilderState extends State<CategoryFutureBuilder> with SingleTickerProviderStateMixin {
   String selectedCategory = allMatchesLabel;
-  Map<String, int> categoryCounts = {};
   late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-    _initializeData();
+    context.read<SportsDataBloc>().add(FetchSportsData());
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     )..repeat();
-  }
-
-  Future<void> _initializeData() async {
-    final sportsBookmakerModel = Provider.of<SportsBookmakerModel>(context, listen: false);
-
-    await sportsBookmakerModel.fetchGames();
-
-    setState(() {
-      categoryCounts = {
-        allMatchesLabel: sportsBookmakerModel.games.length,
-        basketballLabel: sportsBookmakerModel.basketballCategory.length,
-        soccerLabel: sportsBookmakerModel.soccerCategory.length,
-        baseballLabel: sportsBookmakerModel.baseballCategory.length,
-      };
-    });
   }
 
   @override
@@ -52,32 +37,40 @@ class _CategoryFutureBuilderState extends State<CategoryFutureBuilder> with Sing
 
   @override
   Widget build(BuildContext context) {
-    final sportsBookmakerModel = Provider.of<SportsBookmakerModel>(context, listen: false);
+    return BlocBuilder<SportsDataBloc, SportsDataState>(
+      builder: (context, state) {
+        if (state is SportsDataFetching) {
+          return LoadingComponent(
+            animationController: _animationController,
+            iconPath: Assets.icon.loopIcon.path,
+            enableAnimation: true,
+          );
+        }
 
-    if (categoryCounts.isEmpty) {
-      return LoadingComponent(
-        animationController: _animationController,
-        iconPath: Assets.icon.loopIcon.path,
-        enableAnimation: true,
-      );
-    }
+        if (state is SportsDataLoaded) {
+          return CategorySelectorFutureBuilder(
+            selectedCategory: state.selectedCategory,
+            categoryCounts: {
+              allMatchesLabel: state.allGames.length,
+              basketballLabel: state.basketballCategory.length,
+              soccerLabel: state.soccerCategory.length,
+              baseballLabel: state.baseballCategory.length,
+            },
+            eventGames: state.eventGames,
+            onCategorySelected: (category) {
+              if (category != state.selectedCategory) {
+                context.read<SportsDataBloc>().add(UpdateCategory(category));
+              }
+            },
+          );
+        }
 
-    return Column(
-      children: [
-        CategorySelectorFutureBuilder(
-          selectedCategory: selectedCategory,
-          categoryCounts: categoryCounts,
-          onCategorySelected: (category) {
-            setState(() {
-              selectedCategory = category;
-            });
-          },
-        ),
-        GameListFutureBuilder(
-          sportsBookmakerModel: sportsBookmakerModel,
-          selectedCategory: selectedCategory,
-        ),
-      ],
+        if (state is SportsDataError) {
+          return Center(child: Text('Error: ${state.message}'));
+        }
+
+        return Container();
+      },
     );
   }
 }

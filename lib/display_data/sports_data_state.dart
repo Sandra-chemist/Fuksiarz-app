@@ -15,13 +15,25 @@ class SportsDataLoaded extends SportsDataState {
   final List<SportBookmaker> basketballCategory;
   final List<SportBookmaker> soccerCategory;
   final List<SportBookmaker> baseballCategory;
+  final List<EventGames> eventGames;
+  final String selectedCategory;
 
-  SportsDataLoaded({
-    required this.allGames,
-    required this.basketballCategory,
-    required this.soccerCategory,
-    required this.baseballCategory,
-  });
+  SportsDataLoaded(
+      {required this.allGames,
+      required this.basketballCategory,
+      required this.soccerCategory,
+      required this.baseballCategory,
+      required this.eventGames,
+      required this.selectedCategory});
+  @override
+  List<Object?> get props => [
+        allGames,
+        basketballCategory,
+        soccerCategory,
+        baseballCategory,
+        eventGames,
+        selectedCategory,
+      ];
 }
 
 class SportsDataError extends SportsDataState {

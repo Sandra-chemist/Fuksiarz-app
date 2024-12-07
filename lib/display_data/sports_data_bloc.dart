@@ -10,16 +10,15 @@ import 'package:fuksiarz/utils.dart';
 class SportsDataBloc extends Bloc<SportsDataEvent, SportsDataState> {
   final ISportBookmakerService _sportsBookmakerService;
 
-  // SportsDataBloc(super.initialState, this._sportsBookmakerService);
-
   SportsDataBloc()
       : _sportsBookmakerService = getIt<ISportBookmakerService>(),
         super(SportsDataInitial()) {
     on<FetchSportsData>(_onFetchSportsData);
+    on<UpdateCategory>(_onUpdateCategory);
   }
 
   Future<void> _onFetchSportsData(FetchSportsData event, Emitter<SportsDataState> emit) async {
-    emit(SportsDataFetching()); // Emituj stan ładowania
+    emit(SportsDataFetching());
 
     try {
       final matchesDTO = await _sportsBookmakerService.getMatches();
@@ -37,13 +36,45 @@ class SportsDataBloc extends Bloc<SportsDataEvent, SportsDataState> {
           .toList();
 
       emit(SportsDataLoaded(
-        allGames: items,
-        basketballCategory: basketballCategory,
-        soccerCategory: soccerCategory,
-        baseballCategory: baseballCategory,
-      ));
+          allGames: items,
+          basketballCategory: basketballCategory,
+          soccerCategory: soccerCategory,
+          baseballCategory: baseballCategory,
+          eventGames: items.expand((item) => item.eventGames).toList(),
+          selectedCategory: allMatchesLabel));
     } catch (e) {
       emit(SportsDataError('Failed to fetch data: $e'));
+    }
+  }
+
+  Future<void> _onUpdateCategory(UpdateCategory event, Emitter<SportsDataState> emit) async {
+    final state = this.state;
+
+    if (state is SportsDataLoaded) {
+      List<EventGames> filteredGames;
+
+      switch (event.category) {
+        case basketballLabel:
+          filteredGames = state.basketballCategory.expand((item) => item.eventGames).toList();
+          break;
+        case soccerLabel:
+          filteredGames = state.soccerCategory.expand((item) => item.eventGames).toList();
+          break;
+        case baseballLabel:
+          filteredGames = state.baseballCategory.expand((item) => item.eventGames).toList();
+          break;
+        default:
+          filteredGames = state.allGames.expand((item) => item.eventGames).toList();
+      }
+
+      emit(SportsDataLoaded(
+        allGames: state.allGames,
+        basketballCategory: state.basketballCategory,
+        soccerCategory: state.soccerCategory,
+        baseballCategory: state.baseballCategory,
+        eventGames: filteredGames,
+        selectedCategory: event.category,
+      ));
     }
   }
 }

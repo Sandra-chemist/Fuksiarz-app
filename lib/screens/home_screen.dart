@@ -1,12 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:fuksiarz/components/home_screen/category_future_builder_bloc.dart';
+import 'package:fuksiarz/components/home_screen/category_future_builder.dart';
 import 'package:fuksiarz/components/layout.dart';
 import 'package:fuksiarz/components/search_screen/search_component.dart';
 import 'package:fuksiarz/components/upper_beam.dart';
 import 'package:fuksiarz/gen/assets.gen.dart';
 import 'package:fuksiarz/const/texts.dart';
-import 'package:fuksiarz/components/home_screen/category_future_builder.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -23,8 +22,7 @@ class HomeScreen extends StatelessWidget {
             text: price,
           ),
           const SearchComponent(),
-          // const CategoryFutureBuilder(),
-          const CategoryFutureBuilderBloc(),
+          const CategoryFutureBuilder(),
         ],
       ),
     );
