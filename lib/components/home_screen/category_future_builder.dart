@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fuksiarz/components/home_screen/category_selector_future_build.dart';
+import 'package:fuksiarz/components/home_screen/category/category_selector.dart';
 import 'package:fuksiarz/display_data/sports_data_bloc.dart';
 import 'package:fuksiarz/components/loading_component.dart';
 import 'package:fuksiarz/const/texts.dart';
@@ -48,7 +48,7 @@ class _CategoryFutureBuilderState extends State<CategoryFutureBuilder> with Sing
         }
 
         if (state is SportsDataLoaded) {
-          return CategorySelectorFutureBuilder(
+          return CategorySelector(
             selectedCategory: state.selectedCategory,
             categoryCounts: {
               allMatchesLabel: state.allGames.length,

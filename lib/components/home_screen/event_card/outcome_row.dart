@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:fuksiarz/components/home_screen/event_card/outcome_card.dart';
-import 'package:fuksiarz/models/sports_bookmaker_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fuksiarz/const/colors.dart';
+import 'package:fuksiarz/const/margin.dart';
+import 'package:fuksiarz/const/text_styles.dart';
 
 class OutcomeRow extends StatelessWidget {
-  final EventGames eventGame;
-  final Outcome bestOutcome;
+  final List<dynamic> outcomes;
 
-  const OutcomeRow({
-    super.key,
-    required this.eventGame,
-    required this.bestOutcome,
-  });
+  const OutcomeRow({super.key, required this.outcomes});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: eventGame.outcomes.map((outcome) {
-        bool isBestOutcome = outcome == bestOutcome;
-
-        return OutcomeCard(
-          outcome: outcome,
-          isBestOutcome: isBestOutcome,
+      children: outcomes.map((outcome) {
+        return Container(
+          width: 76.w,
+          height: 45.h,
+          margin: EdgeInsets.only(left: horizontalM1),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(3.r),
+            border: Border.all(
+              color: ColorStyle.tertiaryGrey,
+              width: 1.w,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              '${outcome.outcomeOdds}',
+              style: TextStyles.body_4,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         );
       }).toList(),
     );

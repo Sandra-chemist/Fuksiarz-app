@@ -21,51 +21,55 @@ class SportsDataBloc extends Bloc<SportsDataEvent, SportsDataState> {
     emit(SportsDataFetching());
 
     try {
-      final matchesDTO = await _sportsBookmakerService.getMatches();
-      final items = matchesDTO.map(SportBookmaker.fromDTO).toList();
-
-      final basketballCategory = items
-          .where(
-              (match) => Utils.fixPolishCharacters(match.category1Name) == Utils.fixPolishCharacters(basketballLabel))
-          .toList();
-      final soccerCategory = items
-          .where((match) => Utils.fixPolishCharacters(match.category1Name) == Utils.fixPolishCharacters(soccerLabel))
-          .toList();
-      final baseballCategory = items
-          .where((match) => Utils.fixPolishCharacters(match.category1Name) == Utils.fixPolishCharacters(baseballLabel))
-          .toList();
+      final items = await _fetchMatches();
+      final categorizedData = _categorizeMatches(items);
 
       emit(SportsDataLoaded(
-          allGames: items,
-          basketballCategory: basketballCategory,
-          soccerCategory: soccerCategory,
-          baseballCategory: baseballCategory,
-          eventGames: items.expand((item) => item.eventGames).toList(),
-          selectedCategory: allMatchesLabel));
+        allGames: items,
+        basketballCategory: categorizedData[basketballLabel] ?? [],
+        soccerCategory: categorizedData[soccerLabel] ?? [],
+        baseballCategory: categorizedData[baseballLabel] ?? [],
+        eventGames: items.expand((item) => item.eventGames).toList(),
+        selectedCategory: allMatchesLabel,
+      ));
     } catch (e) {
       emit(SportsDataError('Failed to fetch data: $e'));
     }
+  }
+
+  Future<List<SportBookmaker>> _fetchMatches() async {
+    final matchesDTO = await _sportsBookmakerService.getMatches();
+    return matchesDTO.map(SportBookmaker.fromDTO).toList();
+  }
+
+  Map<String, List<SportBookmaker>> _categorizeMatches(List<SportBookmaker> matches) {
+    final Map<String, List<SportBookmaker>> categorizedMatches = {};
+
+    for (final label in [basketballLabel, soccerLabel, baseballLabel]) {
+      categorizedMatches[label] = _filterCategory(matches, label);
+    }
+
+    return categorizedMatches;
+  }
+
+  List<SportBookmaker> _filterCategory(List<SportBookmaker> items, String label) {
+    return items
+        .where((match) => Utils.fixPolishCharacters(match.category1Name) == Utils.fixPolishCharacters(label))
+        .toList();
   }
 
   Future<void> _onUpdateCategory(UpdateCategory event, Emitter<SportsDataState> emit) async {
     final state = this.state;
 
     if (state is SportsDataLoaded) {
-      List<EventGames> filteredGames;
+      final categoryMap = {
+        basketballLabel: state.basketballCategory,
+        soccerLabel: state.soccerCategory,
+        baseballLabel: state.baseballCategory,
+      };
 
-      switch (event.category) {
-        case basketballLabel:
-          filteredGames = state.basketballCategory.expand((item) => item.eventGames).toList();
-          break;
-        case soccerLabel:
-          filteredGames = state.soccerCategory.expand((item) => item.eventGames).toList();
-          break;
-        case baseballLabel:
-          filteredGames = state.baseballCategory.expand((item) => item.eventGames).toList();
-          break;
-        default:
-          filteredGames = state.allGames.expand((item) => item.eventGames).toList();
-      }
+      final filteredGames = categoryMap[event.category]?.expand((item) => item.eventGames).toList() ??
+          state.allGames.expand((item) => item.eventGames).toList();
 
       emit(SportsDataLoaded(
         allGames: state.allGames,

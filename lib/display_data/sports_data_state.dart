@@ -25,6 +25,7 @@ class SportsDataLoaded extends SportsDataState {
       required this.baseballCategory,
       required this.eventGames,
       required this.selectedCategory});
+
   @override
   List<Object?> get props => [
         allGames,
