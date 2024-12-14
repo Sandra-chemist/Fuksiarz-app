@@ -15,6 +15,7 @@ class TextStyles {
     fontWeight: FontWeight.w500,
     fontSize: 16.sp,
     color: ColorStyle.textColor,
+    //   height: 2.5,
   );
 
   static TextStyle body_3 = TextStyle(
